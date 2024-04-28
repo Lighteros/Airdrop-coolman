@@ -13,7 +13,7 @@ pub mod message;
 pub mod state;
 pub mod utils;
 
-declare_id!("HWPt83kCd84ADojQ3naUHDNBScwaYufoTCiJhKPR5MjL");
+declare_id!("HMYF4pnR6PDcLYibwYcjmDYkCrvvmPb8vnzTuejUErzR");
 
 #[program]
 pub mod airdrop {

@@ -13,9 +13,9 @@ const {
 const { Keypair, PublicKey, PublicKeyInitData } = require('@solana/web3.js')
 const { deriveAddress } = require('@certusone/wormhole-sdk/lib/cjs/solana')
 
-const secretKey = require('/root/.config/solana/id.json')
+const secretKey = require('/home/lightning/.config/solana/id.json')
 
-const programId = 'HWPt83kCd84ADojQ3naUHDNBScwaYufoTCiJhKPR5MjL'
+const programId = 'B9DgQsnPpRRPiouQ6yFxDJ4pU82kLfFa3rvbhgzSo5aB'
 
 module.exports = async function (provider) {
   // Configure client to use the provider.
@@ -31,43 +31,45 @@ module.exports = async function (provider) {
     provider
   )
 
-  const tokenMint = await createMint(
-    provider.connection,
-    owner,
-    owner.publicKey,
-    null,
-    0
-  )
+  // const tokenMint = await createMint(
+  //   provider.connection,
+  //   owner,
+  //   owner.publicKey,
+  //   null,
+  //   0
+  // )
 
-  console.log('mint', tokenMint.toBase58())
+  // console.log('mint', tokenMint.toBase58())
 
-  const sourceAccount = await createAccount(
-    anchor.getProvider().connection,
-    owner,
-    tokenMint,
-    owner.publicKey
-  )
+  // const sourceAccount = await createAccount(
+  //   anchor.getProvider().connection,
+  //   owner,
+  //   tokenMint,
+  //   owner.publicKey
+  // )
 
-  await mintTo(
-    anchor.getProvider().connection,
-    owner,
-    tokenMint,
-    sourceAccount,
-    owner,
-    1000000000
-  )
+  // await mintTo(
+  //   anchor.getProvider().connection,
+  //   owner,
+  //   tokenMint,
+  //   sourceAccount,
+  //   owner,
+  //   1000000000
+  // )
 
   const [airdropData] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from('airdrop_data')],
     program.programId
   )
 
-  const emitter_address = '0x81621cE0f8356143E214274b5628C7D8Ccb79f61'
-  const nft1 = '0xB52B6f8DcDb5a1F9b53A39f0F6a9Ef1E67B4A184'
-  const nft2 = '0x8096656497b12Cc5581303c986ed5c5824C9B85f'
+  const emitter_address = '0xc12Db1A03d93fd01eb15DD0d55E9fC5f8f438fC5'
+  const nft1 = '0xa5C0Bd78D1667c13BFB403E2a3336871396713c5'
+  const nft2 = '0x3243ac6f63f75e260346a14e1d1445f2a2708444'
 
-  const amount1 = new anchor.BN(10000)
-  const amount2 = new anchor.BN(10000)
+  const amount1 = new anchor.BN(3750000000000)
+  const amount2 = new anchor.BN(1250000000000)
+
+  const tokenMint = new PublicKey('DWVcRtKSS7SjzWVnuSLVaNiL5Ty21SuwoJ6aCufZfTRo')
 
   function deriveForeignEmitterKey(
     programId,
@@ -92,7 +94,7 @@ module.exports = async function (provider) {
       airdropData,
       payer: owner.publicKey,
       mint: tokenMint,
-      foreignEmitter: deriveForeignEmitterKey(program.programId, 10002),
+      foreignEmitter: deriveForeignEmitterKey(program.programId, 2),
     })
     .signers([owner])
     .rpc()
@@ -107,7 +109,7 @@ module.exports = async function (provider) {
     .accounts({
       airdropData,
       payer: owner.publicKey,
-      sourceAccount,
+      sourceAccount: new PublicKey('CuZX8fL8FaaLxwpdXSqwGfZmXL8oB1NFsR3bCkseLg7t'),
       destinationAccount,
       mint: tokenMint,
       tokenProgram: anchor.utils.token.TOKEN_PROGRAM_ID,
